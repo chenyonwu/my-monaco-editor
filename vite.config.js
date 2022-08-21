@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import Path from 'path';
 import vue from '@vitejs/plugin-vue';
 import WindiCSS from 'vite-plugin-windicss';
 import Legacy from '@vitejs/plugin-legacy';
@@ -28,4 +29,13 @@ export default defineConfig({
       resolvers: [ ComponentResolver ],
     }),
   ],
-})
+  resolve: {
+    alias: {
+      '@': `${Path.resolve(__dirname, 'src')}`,
+    },
+  },
+  server: {
+    host: true,
+    port: 12581,
+  },
+});
