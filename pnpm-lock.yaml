@@ -15,6 +15,7 @@ specifiers:
   unplugin-auto-import: ^0.11.2
   unplugin-vue-components: ^0.22.4
   vite: ^3.0.7
+  vite-plugin-monaco-editor: ^1.1.0
   vite-plugin-windicss: ^1.8.7
   vue: ^3.2.37
   windicss: ^3.5.6
@@ -24,6 +25,7 @@ dependencies:
   monaco-editor-textmate: registry.npmmirror.com/monaco-editor-textmate/3.0.0_ss6lrp45w75rkjvqfs3bsfnncy
   monaco-textmate: registry.npmmirror.com/monaco-textmate/3.0.1_onigasm@2.2.5
   onigasm: registry.npmmirror.com/onigasm/2.2.5
+  vite-plugin-monaco-editor: registry.npmmirror.com/vite-plugin-monaco-editor/1.1.0_monaco-editor@0.34.0
   vue: registry.npmmirror.com/vue/3.2.37
 
 devDependencies:
@@ -1373,6 +1375,17 @@ packages:
       escalade: registry.npmmirror.com/escalade/3.1.1
       picocolors: registry.npmmirror.com/picocolors/1.0.0
     dev: true
+
+  registry.npmmirror.com/vite-plugin-monaco-editor/1.1.0_monaco-editor@0.34.0:
+    resolution: {integrity: sha512-IvtUqZotrRoVqwT0PBBDIZPNraya3BxN/bfcNfnxZ5rkJiGcNtO5eAOWWSgT7zullIAEqQwxMU83yL9J5k7gww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite-plugin-monaco-editor/-/vite-plugin-monaco-editor-1.1.0.tgz}
+    id: registry.npmmirror.com/vite-plugin-monaco-editor/1.1.0
+    name: vite-plugin-monaco-editor
+    version: 1.1.0
+    peerDependencies:
+      monaco-editor: '>=0.33.0'
+    dependencies:
+      monaco-editor: registry.npmmirror.com/monaco-editor/0.34.0
+    dev: false
 
   registry.npmmirror.com/vite-plugin-windicss/1.8.7_vite@3.0.9:
     resolution: {integrity: sha512-/zwQ8+RV+MSkbG0IGqsEma6r2R01NzN/aNpNjJD7VVAkxAptNznqDXOObFTskkWfZ+9m6KJZCOuCPgAFtQIzEA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite-plugin-windicss/-/vite-plugin-windicss-1.8.7.tgz}

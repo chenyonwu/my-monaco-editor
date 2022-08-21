@@ -5,6 +5,7 @@ import WindiCSS from 'vite-plugin-windicss';
 import Legacy from '@vitejs/plugin-legacy';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 const ComponentResolver = name => {
   return { importName: name, path: `@/components/index.js`};
@@ -27,6 +28,15 @@ export default defineConfig({
     Components({
       dts: false,
       resolvers: [ ComponentResolver ],
+    }),
+    monacoEditorPlugin.default({
+      languageWorkers: ['editorWorkerService', 'json'],
+      customWorkers: [
+        {
+          label: 'typescript',
+          entry: 'monaco-editor/esm/vs/language/typescript/ts.worker',
+        },
+      ],
     }),
   ],
   resolve: {

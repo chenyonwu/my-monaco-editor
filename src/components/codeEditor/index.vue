@@ -30,6 +30,7 @@
         await loadWASM(`${baseUrl}/monacoConfig/onigasm/onigasm.wasm`);
     }
     let hasGetWork = false;
+    const monacoEditorInnerLanguages = ['json', 'javascript', 'typescript'];
 
     //创建作用域映射
     const tmGrammarJsonMap = {
@@ -74,7 +75,8 @@
 
     self.MonacoEnvironment = {
         getWorker(_, label) {
-            let hasGetWork = true;
+            console.log(label);
+            hasGetWork = true;
 
             if (label === 'json') {
                 return new jsonWorker();
@@ -86,6 +88,8 @@
                 return new htmlWorker();
             }
             if (label === 'typescript' || label === 'javascript') {
+                console.log("javascriptworker");
+                console.log(hasGetWork);
                 return new tsWorker();
             }
             return new editorWorker();
@@ -109,23 +113,59 @@
             language: "javascript",
             theme: 'vs-dark',
         });
+        loadMonacoEditor('javascript', unref(monacoInstance));
         monaco.editor.setTheme('OneDarkPro');
     }
 
-    //设置token解析器
-    const loop = () => {
-        if (hasGetWork) {
-        Promise.resolve().then(async () => {
-            await wireTmGrammars(monaco, registry, grammars, editor);
-        });
-        } else {
-        setTimeout(() => {
-            loop();
-        }, 200);
+    const loadMonacoEditor = async (languageId, editor) => {
+        if (!scopeNameMap[languageId]) {
+            return;
         }
-    };
 
-    loop();
+        const grammars = new Map();
+        grammars.set(languageId, scopeNameMap[languageId]);
+
+        const registry = new Registry({
+            getGrammarDefinition: async scopeName => {
+                let jsonMap = tmGrammarJsonMap[scopeName];
+
+                if (!jsonMap) {
+                    return null;
+                }
+
+                let format = 'json';
+                let path = jsonMap;
+
+                if (typeof jsonMap != 'string') {
+                    format = jsonMap.format;
+                    path = jsonMap.path;
+                }
+
+                return {
+                    format,
+                    content: await (await fetch(`${baseUrl}/monacoConfig/grammars/${path}`)).text(),
+                }
+            }
+        });
+
+        if (!monacoEditorInnerLanguages.includes(languageId)) {
+            monaco.languages.register({ id: languageId });
+        }
+
+        const loop = () => {
+            if (hasGetWork) {
+                Promise.resolve().then(async () => {
+                    await wireTmGrammars(monaco, registry, grammars, editor);
+                });
+            } else {
+                setTimeout(() => {
+                    loop();
+                }, 200);
+            }
+        };
+
+        loop();
+    }
 </script>
 
 <style lang="scss" scoped>
