@@ -1,5 +1,6 @@
 <template>
   hello,world
+  <CodeEditor/>
 </template>
 
 <script>
